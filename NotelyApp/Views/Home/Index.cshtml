@@ -1,8 +1,39 @@
-﻿@{
+﻿@model IEnumerable<NoteModel>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="index">
+    @if (Model.Any()) {
+        <div class="panel panel-default index header">
+            <h3>
+                Your notes
+            </h3>
+        </div>
+
+        @foreach(NoteModel note in Model.Reverse())
+                {
+                    <div class="panel panel-default">
+                        <a asp-action="NoteDetail" asp-route="note.Id" class="index list-item-link" >
+                            <div class="panel-body">
+                                @note.Subject
+                            </div>
+                        </a>
+                    </div>
+                }
+    }
+            else
+            {
+                <div class="panel panel-default index empty-list">
+                    <h3>
+                        You dont have any notes
+                    </h3>
+                </div>
+            }
+
+    <div class="index new-note btn">
+        <a asp-action="NoteEditor" class="btn-dark">New Note</a>
+    </div>
 </div>
+
+
